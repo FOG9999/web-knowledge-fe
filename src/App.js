@@ -1,9 +1,14 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { LayoutContainer } from './layouts/LayoutContainer';
+import { CourseDetail } from './components/CourseDetail';
 
 function App() {
   return (
-    <LayoutContainer />
+    <BrowserRouter>
+      <Routes>
+        <Route element={<CourseDetail />} path="/" />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

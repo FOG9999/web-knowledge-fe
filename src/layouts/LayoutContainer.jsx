@@ -1,32 +1,42 @@
 import { Breadcrumb, Layout, Menu } from "antd";
 import { CustomHeader } from "./CustomHeader";
 import fake from "../shared/fake/FakeData.json";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubMenu from "antd/lib/menu/SubMenu";
 import "../styles/LayoutContainer.scss";
 import { LaptopOutlined } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
 
-export const LayoutContainer = ({ component }) => {
+export const LayoutContainer = (props) => {
     const [categories, setCategories] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState("");
+    const [childCourses, setChildCourses] = useState([]);
     const [lessons, setLessons] = useState([]);
-    const [courses, setCourses] = useState([]);
+    const [blocks, setBlocks] = useState([]);
     const [collapsed, setCollapsed] = useState(true);
+    const [selectedLesson, setSelectedLesson] = useState('');
+
+    useEffect(() => {
+        let children = getChildCoursesForParent();
+        setChildCourses([...children]);
+    }, [selectedCourse])
 
     useEffect(() => {
         setTimeout(() => {
             setCategories(fake.categories);
-            setCourses(fake.courses);
-            setLessons(fake.lessons);
-            setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
+            setLessons(fake.lessons);            
+            // setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
         }, 1000);
     }, []);
 
+    useEffect(() => {
+        getBlocksForCurrentLesson();
+    }, [selectedLesson])
+
     // get only parent courses for a category on horizontal navabar
     const getParentCoursesForCategoryMenu = (categoryId) => {
-        return courses.filter((course) => !course.parentCourseId && course.categoryId === categoryId);
+        return fake.courses.filter((course) => !course.parentCourseId && course.categoryId === categoryId);
     };
 
     // render courses when click on a category on horizontal navbar
@@ -69,14 +79,14 @@ export const LayoutContainer = ({ component }) => {
 
     // get child courses for current selected course
     const getChildCoursesForParent = () => {
-        return courses.filter((c) => c.parentCourseId === selectedCourse);
+        return fake.courses.filter((c) => c.parentCourseId === selectedCourse);
     };
 
     // render child courses of a course
     const renderChildCourses = () => {
         return (
             <Menu mode="inline" theme="dark" style={{ height: "100%", borderRight: 0 }}>
-                {getChildCoursesForParent().map((c) => {
+                {childCourses.map((c) => {
                     return renderLessonsForChildCourse(c);
                 })}
             </Menu>
@@ -84,8 +94,15 @@ export const LayoutContainer = ({ component }) => {
     };
 
     const getLessonsForChildCourse = (childCourse) => {
-        return lessons.filter((l) => l.courseId === childCourse.id);
+        let currLessons = lessons.filter((l) => l.courseId === childCourse.id);
+        setSelectedLesson(currLessons[0].id);        
+        return currLessons;
     };
+
+    const getBlocksForCurrentLesson = () => {
+        let currBlocks = fake.blocks.filter(b => b.lessonId === selectedLesson);
+        setBlocks(currBlocks);
+    }
 
     const onCollapse = (collapsed) => {
         setCollapsed(collapsed)
@@ -115,7 +132,7 @@ export const LayoutContainer = ({ component }) => {
                             minHeight: 280,
                         }}
                     >
-                        Content
+                        {React.cloneElement(props.children, {blocks})}
                     </Content>
                     <Footer style={{ textAlign: "center" }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
