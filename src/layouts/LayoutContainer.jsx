@@ -20,7 +20,7 @@ export const LayoutContainer = ({ component }) => {
             setCategories(fake.categories);
             setCourses(fake.courses);
             setLessons(fake.lessons);
-            setSelectedCourse("058975b9-d05e-465a-91e1-da5c8bc74ba8");
+            setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
         }, 1000);
     }, []);
 
