@@ -1,10 +1,9 @@
 import { LayoutContainer } from "../layouts/LayoutContainer"
+import { BlockList } from "./BlockList";
 
-export const CourseDetail = ({blocks}) => {
-
-    console.log(blocks);
+export const CourseDetail = () => {
 
     return <LayoutContainer>
-        <div>Content abc</div>
+        <BlockList />
     </LayoutContainer>
 }

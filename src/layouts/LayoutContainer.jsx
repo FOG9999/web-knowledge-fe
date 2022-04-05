@@ -84,8 +84,7 @@ export const LayoutContainer = (props) => {
                 {lessons.get(childCourse.id).map((l) => {
                     return (
                         <Menu.Item key={l.id} title={l.title}>
-                            {" "}
-                            {l.title}{" "}
+                            {l.title}
                         </Menu.Item>
                     );
                 })}
