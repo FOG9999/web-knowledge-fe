@@ -10,6 +10,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 export const LayoutContainer = (props) => {
     const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedCourse, setSelectedCourse] = useState("");
     const [childCourses, setChildCourses] = useState([]);
     const [lessons, setLessons] = useState(new Map());
@@ -23,16 +24,19 @@ export const LayoutContainer = (props) => {
             let lessonMap = new Map();
             childCourses.forEach((course) => {
                 lessonMap.set(course.id, getLessonsForChildCourse(course));
-            });
+            });            
             setChildCourses(childCourses);
             setLessons(lessonMap);
-            setSelectedLesson(lessonMap.get("e9c5bb46-9710-4c97-b914-ec0c85d3a39f")[0].id); // id of the first lesson in the first child course of the current course
+            // selected lesson is the first lesson in the list
+            let firstKey = lessonMap.keys().next().value;
+            setSelectedLesson(lessonMap.get(firstKey)[0].id); // id of the first lesson in the first child course of the current course
         }
     }, [selectedCourse]);
 
     useEffect(() => {
         setTimeout(() => {
             setCategories(fake.categories);
+            setSelectedCategory("b3256e47-dab3-4ec0-85b9-70fd13e47098");
             // setLessons(fake.lessons);
             setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
         }, 1000);
@@ -52,7 +56,11 @@ export const LayoutContainer = (props) => {
         return (
             <SubMenu key={cate.id} title={cate.title}>
                 {getParentCoursesForCategoryMenu(cate.id).map((parentCourse) => {
-                    return <Menu.Item key={parentCourse.id}>{parentCourse.title}</Menu.Item>;
+                    return (
+                        <Menu.Item key={parentCourse.id}>
+                            {parentCourse.title}
+                        </Menu.Item>
+                    );
                 })}
             </SubMenu>
         );
@@ -61,7 +69,7 @@ export const LayoutContainer = (props) => {
     // render categories in horizontal navbar
     const renderCategories = () => {
         return (
-            <Menu mode="horizontal" theme="dark" style={{ lineHeight: "64px" }}>
+            <Menu mode="horizontal" theme="dark" style={{ lineHeight: "64px" }} activeKey={selectedCategory} onSelect={onClickParentCourse} triggerSubMenuAction="click">
                 {categories.map((cate) => {
                     return renderCoursesForCategoryMenu(cate);
                 })}
@@ -120,6 +128,13 @@ export const LayoutContainer = (props) => {
 
     const onCollapse = (collapsed) => {
         setCollapsed(collapsed);
+    };
+
+    // on click a parent course under category menu
+    // key - the selected Menu.Item, keyPath: ['parentCourseId', 'categoryId']
+    const onClickParentCourse = ({ item, key, keyPath, selectedKeys, domEvent }) => {
+        setSelectedCourse(key);
+        setSelectedCategory(keyPath[1]);
     };
 
     return (
