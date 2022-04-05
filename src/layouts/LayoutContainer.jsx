@@ -88,11 +88,12 @@ export const LayoutContainer = (props) => {
                         <span>{childCourse.title}</span>
                     </span>
                 }
+                popupClassName="layout-submenu-popup"
             >
                 {lessons.get(childCourse.id).map((l) => {
                     return (
-                        <Menu.Item key={l.id} title={l.title}>
-                            {l.title}
+                        <Menu.Item key={l.id} title={l.title} >
+                            <span>{l.title}</span>
                         </Menu.Item>
                     );
                 })}
@@ -108,7 +109,7 @@ export const LayoutContainer = (props) => {
     // render child courses of a course
     const renderChildCourses = () => {
         return (
-            <Menu mode="inline" theme="dark" style={{ height: "100%", borderRight: 0 }} onSelect={onClickLesson} activeKey={selectedLesson}>
+            <Menu mode="inline" theme="dark" style={{ height: "100%", borderRight: 0 }} onSelect={onClickLesson} activeKey={selectedLesson} triggerSubMenuAction="click">
                 {childCourses.map((c) => {
                     return renderLessonsForChildCourse(c);
                 })}
