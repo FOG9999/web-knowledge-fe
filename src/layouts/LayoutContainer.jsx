@@ -108,7 +108,7 @@ export const LayoutContainer = (props) => {
     // render child courses of a course
     const renderChildCourses = () => {
         return (
-            <Menu mode="inline" theme="dark" style={{ height: "100%", borderRight: 0 }}>
+            <Menu mode="inline" theme="dark" style={{ height: "100%", borderRight: 0 }} onSelect={onClickLesson} activeKey={selectedLesson}>
                 {childCourses.map((c) => {
                     return renderLessonsForChildCourse(c);
                 })}
@@ -136,6 +136,11 @@ export const LayoutContainer = (props) => {
         setSelectedCourse(key);
         setSelectedCategory(keyPath[1]);
     };
+    
+    // handle click a lesson 
+    const onClickLesson = ({ item, key, keyPath, selectedKeys, domEvent }) => {
+        setSelectedLesson(key);
+    }
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
