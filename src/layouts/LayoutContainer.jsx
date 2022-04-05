@@ -12,27 +12,35 @@ export const LayoutContainer = (props) => {
     const [categories, setCategories] = useState([]);
     const [selectedCourse, setSelectedCourse] = useState("");
     const [childCourses, setChildCourses] = useState([]);
-    const [lessons, setLessons] = useState([]);
+    const [lessons, setLessons] = useState(new Map());
     const [blocks, setBlocks] = useState([]);
     const [collapsed, setCollapsed] = useState(true);
-    const [selectedLesson, setSelectedLesson] = useState('');
+    const [selectedLesson, setSelectedLesson] = useState("");
 
     useEffect(() => {
-        let children = getChildCoursesForParent();
-        setChildCourses([...children]);
-    }, [selectedCourse])
+        if (selectedCourse) {
+            let childCourses = getChildCoursesForParent();
+            let lessonMap = new Map();
+            childCourses.forEach((course) => {
+                lessonMap.set(course.id, getLessonsForChildCourse(course));
+            });
+            setChildCourses(childCourses);
+            setLessons(lessonMap);
+            setSelectedLesson(lessonMap.get("e9c5bb46-9710-4c97-b914-ec0c85d3a39f")[0].id); // id of the first lesson in the first child course of the current course
+        }
+    }, [selectedCourse]);
 
     useEffect(() => {
         setTimeout(() => {
             setCategories(fake.categories);
-            setLessons(fake.lessons);            
-            // setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
+            // setLessons(fake.lessons);
+            setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
         }, 1000);
     }, []);
 
     useEffect(() => {
         getBlocksForCurrentLesson();
-    }, [selectedLesson])
+    }, [selectedLesson]);
 
     // get only parent courses for a category on horizontal navabar
     const getParentCoursesForCategoryMenu = (categoryId) => {
@@ -53,7 +61,7 @@ export const LayoutContainer = (props) => {
     // render categories in horizontal navbar
     const renderCategories = () => {
         return (
-            <Menu mode="horizontal" theme="dark" style={{ lineHeight: '64px' }}>
+            <Menu mode="horizontal" theme="dark" style={{ lineHeight: "64px" }}>
                 {categories.map((cate) => {
                     return renderCoursesForCategoryMenu(cate);
                 })}
@@ -64,14 +72,22 @@ export const LayoutContainer = (props) => {
     // render lessons of a child course on submenu in sidebar
     const renderLessonsForChildCourse = (childCourse) => {
         return (
-            <SubMenu key={childCourse.id} title={
-                <span>
-                    <LaptopOutlined />
-                    <span>{childCourse.title}</span>
-                </span>
-            }>
-                {getLessonsForChildCourse(childCourse).map((l) => {
-                    return <Menu.Item key={l.id} title={l.title}> {l.title} </Menu.Item>;
+            <SubMenu
+                key={childCourse.id}
+                title={
+                    <span>
+                        <LaptopOutlined />
+                        <span>{childCourse.title}</span>
+                    </span>
+                }
+            >
+                {lessons.get(childCourse.id).map((l) => {
+                    return (
+                        <Menu.Item key={l.id} title={l.title}>
+                            {" "}
+                            {l.title}{" "}
+                        </Menu.Item>
+                    );
                 })}
             </SubMenu>
         );
@@ -94,22 +110,21 @@ export const LayoutContainer = (props) => {
     };
 
     const getLessonsForChildCourse = (childCourse) => {
-        let currLessons = lessons.filter((l) => l.courseId === childCourse.id);
-        setSelectedLesson(currLessons[0].id);        
+        let currLessons = fake.lessons.filter((l) => l.courseId === childCourse.id);
         return currLessons;
     };
 
     const getBlocksForCurrentLesson = () => {
-        let currBlocks = fake.blocks.filter(b => b.lessonId === selectedLesson);
+        let currBlocks = fake.blocks.filter((b) => b.lessonId === selectedLesson);
         setBlocks(currBlocks);
-    }
+    };
 
     const onCollapse = (collapsed) => {
-        setCollapsed(collapsed)
+        setCollapsed(collapsed);
     };
 
     return (
-        <Layout style={{minHeight: '100vh'}}>
+        <Layout style={{ minHeight: "100vh" }}>
             <Header>
                 <CustomHeader />
                 {renderCategories()}
@@ -132,7 +147,7 @@ export const LayoutContainer = (props) => {
                             minHeight: 280,
                         }}
                     >
-                        {React.cloneElement(props.children, {blocks})}
+                        {React.cloneElement(props.children, { blocks })}
                     </Content>
                     <Footer style={{ textAlign: "center" }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
