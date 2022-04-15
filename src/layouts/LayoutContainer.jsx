@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Breadcrumb, Layout, Menu } from "antd";
 import { CustomHeader } from "./CustomHeader";
 import fake from "../shared/fake/FakeData.json";
@@ -24,7 +25,7 @@ export const LayoutContainer = (props) => {
             let lessonMap = new Map();
             childCourses.forEach((course) => {
                 lessonMap.set(course.id, getLessonsForChildCourse(course));
-            });            
+            });
             setChildCourses(childCourses);
             setLessons(lessonMap);
             // selected lesson is the first lesson in the list
@@ -137,7 +138,7 @@ export const LayoutContainer = (props) => {
         setSelectedCourse(key);
         setSelectedCategory(keyPath[1]);
     };
-    
+
     // handle click a lesson 
     const onClickLesson = ({ item, key, keyPath, selectedKeys, domEvent }) => {
         setSelectedLesson(key);
