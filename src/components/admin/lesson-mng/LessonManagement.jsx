@@ -10,7 +10,9 @@ export const LessonManagement = () => {
                 <LessonDesign />
             </TabPane>
             <TabPane tab="Preview" key="2">
-
+                <div>
+                    Preview tab
+                </div>
             </TabPane>
         </Tabs>
     )

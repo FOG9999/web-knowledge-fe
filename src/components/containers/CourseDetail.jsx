@@ -1,5 +1,5 @@
-import { LayoutContainer } from "../layouts/LayoutContainer"
-import { BlockList } from "./BlockList";
+import { LayoutContainer } from "../../layouts/LayoutContainer"
+import { BlockList } from "../BlockList";
 
 export const CourseDetail = () => {
 

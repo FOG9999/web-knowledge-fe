@@ -15,7 +15,7 @@ export const DesignBLockList = ({
         })
     }
 
-    return <Card title={lessonTitle}>
+    return <Card title={lessonTitle} style={{ minHeight: '100%' }}>
         <Droppable droppableId="design-list">
             {
                 (provided, snapshot) => {
