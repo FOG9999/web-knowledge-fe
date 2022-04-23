@@ -1,27 +1,25 @@
 import { Card } from "antd"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Droppable } from "react-beautiful-dnd"
 import { DesignBlock } from "./DesignBlock"
+import { LessonContext } from "./LessonDesign"
 
-export const DesignBLockList = ({
-    lessonTitle
-}) => {
+export const DesignBLockList = ({ listDesignBlocks }) => {
 
-    const [deisgnBlockList, setDesignBlockList] = useState([])
+    const currentLesson = useContext(LessonContext);
 
     const renderDeisgnBlockList = () => {
-        return deisgnBlockList.map((designBlock, index) => {
+        return listDesignBlocks.map((designBlock, index) => {
             return <DesignBlock designBlock={designBlock} key={index} />
         })
     }
 
-    return <Card title={lessonTitle} style={{ minHeight: '100%' }}>
+    return <Card title={currentLesson.title} style={{ minHeight: '100%' }}>
         <Droppable droppableId="design-list">
             {
                 (provided, snapshot) => {
                     return (<div
                         ref={provided.innerRef}
-                        style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}
                         {...provided.droppableProps}
                     >
                         {

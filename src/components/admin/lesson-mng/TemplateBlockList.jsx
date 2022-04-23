@@ -5,12 +5,7 @@ import { templateBlockList } from "../../../shared/fake/TemplateBlock";
 import { TemplateBlock } from "./TemplateBlock";
 import '../../../styles/TemplateBlockList.scss';
 
-export const TemplateBlockList = () => {
-    const [templateBLockList, setTemplateBlockList] = useState([]);
-
-    useEffect(() => {
-        setTemplateBlockList(templateBlockList)
-    }, [])
+export const TemplateBlockList = ({ templateBLockList }) => {
 
     const renderTemplateBlockList = () => {
         return templateBLockList.map((templateBlock, index) => {
@@ -24,7 +19,6 @@ export const TemplateBlockList = () => {
                 (provided, snapshot) => {
                     return (<div className="mb-2"
                         ref={provided.innerRef}
-                        style={{ backgroundColor: snapshot.isDraggingOver ? 'blue' : 'grey' }}
                         {...provided.droppableProps}
                     >
                         {

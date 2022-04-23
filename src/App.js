@@ -8,7 +8,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<CourseDetail />} path="/course-detail" />
-        <Route element={<LessonMngWrapper />} path="/" />
+        <Route element={<LessonMngWrapper />} path="lesson-mng/:lId" />
       </Routes>
     </BrowserRouter>
   );
