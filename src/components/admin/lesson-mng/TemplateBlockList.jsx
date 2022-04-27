@@ -14,10 +14,10 @@ export const TemplateBlockList = ({ templateBLockList }) => {
     }
 
     return <Card className='template-block-list-card' style={{ width: '100%' }}>
-        <Droppable droppableId="template-list" isDropDisabled={true}>
+        <Droppable droppableId="template-list" isDropDisabled={true} key={2}>
             {
                 (provided, snapshot) => {
-                    return (<div className="mb-2"
+                    return (<div className="mb-2" style={{maxHeight: '70vh', overflowY: 'auto', minHeight: '400px'}}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >

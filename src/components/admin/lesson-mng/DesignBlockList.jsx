@@ -15,10 +15,10 @@ export const DesignBLockList = ({ listDesignBlocks }) => {
     }
 
     return <Card title={currentLesson.title} style={{ minHeight: '100%' }}>
-        <Droppable droppableId="design-list">
+        <Droppable droppableId="design-list" key={1}>
             {
                 (provided, snapshot) => {
-                    return (<div
+                    return (<div style={{minHeight: '500px', maxHeight: '70vh', overflowY: 'auto'}}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >
