@@ -1,9 +1,9 @@
 import { LayoutContainer } from "../../layouts/LayoutContainer"
-import { BlockList } from "../BlockList";
+import { BlockListRenderer } from "../BlockListRenderer";
 
 export const CourseDetail = () => {
 
     return <LayoutContainer>
-        <BlockList />
+        <BlockListRenderer />
     </LayoutContainer>
 }

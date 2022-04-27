@@ -1,19 +1,22 @@
-import { Tabs } from 'antd'
-import { LessonDesign } from './LessonDesign'
+import { Tabs } from "antd";
+import { useState } from "react";
+import { BlockListRenderer } from "../../BlockListRenderer";
+import { LessonDesign } from "./LessonDesign";
 
-const { TabPane } = Tabs
+const { TabPane } = Tabs;
 
 export const LessonManagement = () => {
+    
+    const [listDesignBlocks, setListDesignBlocks] = useState([]);
+    
     return (
-        <Tabs defaultActiveKey='1'>
+        <Tabs defaultActiveKey="1">
             <TabPane tab="Design" key="1">
-                <LessonDesign />
+                <LessonDesign listDesignBlocks={listDesignBlocks} setListDesignBlocks={setListDesignBlocks} />
             </TabPane>
             <TabPane tab="Preview" key="2">
-                <div>
-                    Preview tab
-                </div>
+                <BlockListRenderer blocks={listDesignBlocks} />
             </TabPane>
         </Tabs>
-    )
-}
+    );
+};

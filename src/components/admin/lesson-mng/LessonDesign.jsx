@@ -11,8 +11,7 @@ const LessonContext = React.createContext();
 
 export { LessonContext };
 
-export const LessonDesign = () => {
-    const [listDesignBlocks, setListDesignBlocks] = useState([]);
+export const LessonDesign = ({ listDesignBlocks, setListDesignBlocks }) => {
     const [templateBLockList, setTemplateBlockList] = useState([]);
     const [currentLesson, setCurrentLesson] = useState({});
 
@@ -40,22 +39,32 @@ export const LessonDesign = () => {
     const onDragEnd = ({ type, source, draggableId, destination, reason }) => {
         console.log("props", { type, source, draggableId, destination, reason });
         if (reason === "DROP" && destination) {
-            if (destination.droppableId === "design-list") {
+            if (source.droppableId === "template-list" && destination.droppableId === "design-list") {
                 // find the template block that has the dragging Id
                 let draggingTemplateBlock = templateBLockList.filter((template) => template.id === draggableId)[0];
                 if (draggingTemplateBlock) {
                     let newDesignBlock;
                     if (listDesignBlocks.length) {
                         let lastDeisgnBlockInList = listDesignBlocks[listDesignBlocks.length - 1];
-                        newDesignBlock = new Block("This is a new block", currentLesson.id, null, lastDeisgnBlockInList.id, draggingTemplateBlock.code);
+                        newDesignBlock = new Block(`This is a new ${draggingTemplateBlock.code} block`, currentLesson.id, null, lastDeisgnBlockInList.id, draggingTemplateBlock.code);
                     } else {
-                        newDesignBlock = new Block("This is a new block", currentLesson.id, null, null, draggingTemplateBlock.code);
+                        newDesignBlock = new Block(`This is a new ${draggingTemplateBlock.code} block`, currentLesson.id, null, null, draggingTemplateBlock.code);
                     }
-                    if(draggingTemplateBlock.code === 'code'){
-                        newDesignBlock.content = 'for (i = 0; i < 10; i += 1) {\n    if (i % 2 == 0) {\n        console.log(\'even\');\n    }\n}'
+                    if (draggingTemplateBlock.code === "code") {
+                        newDesignBlock.content = "for (i = 0; i < 10; i += 1) {\n    if (i % 2 == 0) {\n        console.log('even');\n    }\n}";
                     }
                     let newDesignBlockList = [...listDesignBlocks, newDesignBlock];
                     setListDesignBlocks(newDesignBlockList);
+                }
+            }
+            if (source.droppableId === "design-list" && destination.droppableId === "design-list") {
+                let draggingBlockIndex = -1;
+                let draggingBlock = listDesignBlocks.filter((block, index) => {
+                    draggingBlockIndex = index;
+                    block.id === draggableId;
+                })[0];
+                if (draggingBlock) {
+                    
                 }
             }
         }

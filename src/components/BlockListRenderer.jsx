@@ -1,6 +1,6 @@
 import { WKCard } from "../shared/customs/Card"
 
-export const BlockList = ({blocks}) => {
+export const BlockListRenderer = ({blocks}) => {
     const renderBlocks = () => {
         return blocks.map(block => {
             return <WKCard type={block.type} content={block.content} key={block.id} />
