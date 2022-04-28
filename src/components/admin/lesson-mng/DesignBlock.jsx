@@ -7,6 +7,11 @@ import { Draggable } from "react-beautiful-dnd";
 const { Title } = Typography;
 
 export const DesignBlock = ({ designBlock, index }) => {
+
+    useEffect(() => {
+        console.log(designBlock.id, index);
+    }, [designBlock])
+
     const getBlockStyles = () => {
         switch (designBlock.type) {
             case "warn": {
@@ -42,11 +47,11 @@ export const DesignBlock = ({ designBlock, index }) => {
     };
 
     return (
-        <Card className="mb-2" style={getBlockStyles()}>
-            <Draggable draggableId={designBlock.id} index={index}>
-                {(provided, snapshot) => {
-                    return (
-                        <div className="row" ref={provided.innerRef} {...provided.droppableProps}>
+        <Draggable draggableId={designBlock.id} index={index}>
+            {(provided, snapshot) => {
+                return (
+                    <Card className="mb-2" style={getBlockStyles()}>
+                        <div className="row" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                             <div className="col d-flex">
                                 <div className="design-block-title border-end" style={{ width: "60px" }}>
                                     {designBlock.type}
@@ -65,9 +70,9 @@ export const DesignBlock = ({ designBlock, index }) => {
                                 </span>
                             </div>
                         </div>
-                    );
-                }}
-            </Draggable>
-        </Card>
+                    </Card>
+                );
+            }}
+        </Draggable>
     );
 };
