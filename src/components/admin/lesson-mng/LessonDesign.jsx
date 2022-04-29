@@ -37,7 +37,6 @@ export const LessonDesign = ({ listDesignBlocks, setListDesignBlocks }) => {
      * @param {string} reason: 'CANCEL' | 'DROP'
      */
     const onDragEnd = ({ type, source, draggableId, destination, reason }) => {
-        // console.log("props", { type, source, draggableId, destination, reason });
         if (reason === "DROP" && destination) {
             if (source.droppableId === "template-list" && destination.droppableId === "design-list") {
                 // find the template block that has the dragging Id
@@ -53,17 +52,16 @@ export const LessonDesign = ({ listDesignBlocks, setListDesignBlocks }) => {
                     if (draggingTemplateBlock.code === "code") {
                         newDesignBlock.content = "for (i = 0; i < 10; i += 1) {\n    if (i % 2 == 0) {\n        console.log('even');\n    }\n}";
                     }
-                    let newDesignBlockList = [...listDesignBlocks, newDesignBlock];
+                    let newDesignBlockList = [...listDesignBlocks];
+                    newDesignBlockList.splice(destination.index, 0, newDesignBlock);
                     setListDesignBlocks(newDesignBlockList);
                 }
             }
             if (source.droppableId === "design-list" && destination.droppableId === "design-list") {
-                console.log(source.index, destination.index);
                 let blockToReorder = listDesignBlocks[source.index];
                 let newDesignBlockList = [...listDesignBlocks];
                 newDesignBlockList.splice(source.index, 1);                
                 newDesignBlockList.splice(destination.index, 0, blockToReorder);
-                // console.log(listDesignBlocks);
                 setListDesignBlocks(newDesignBlockList);
             }
         }
