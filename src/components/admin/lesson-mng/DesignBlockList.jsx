@@ -10,7 +10,7 @@ export const DesignBLockList = ({ listDesignBlocks }) => {
 
     const renderDeisgnBlockList = () => {
         return listDesignBlocks.map((designBlock, index) => {
-            return <DesignBlock designBlock={designBlock} key={index} index={index}/>
+            return <DesignBlock designBlock={designBlock} key={designBlock.id} index={index}/>
         })
     }
 
