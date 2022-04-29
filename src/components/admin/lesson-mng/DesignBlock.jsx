@@ -3,14 +3,18 @@ import { Card, Typography } from "antd";
 import { useEffect, useState } from "react";
 import Prism from "prismjs";
 import { Draggable } from "react-beautiful-dnd";
+import "../../../styles/DesignBlock.scss";
 
 const { Title } = Typography;
 
 export const DesignBlock = ({ designBlock, index }) => {
+    useEffect(() => {
+        console.log("index change");
+    }, [index]);
 
     useEffect(() => {
-        console.log(designBlock.id, index);
-    }, [designBlock])
+        console.log("block change");
+    }, [designBlock]);
 
     const getBlockStyles = () => {
         switch (designBlock.type) {
@@ -24,7 +28,7 @@ export const DesignBlock = ({ designBlock, index }) => {
                 return { backgroundColor: "#cc0000", color: "white" };
             }
             default: {
-                return { backgroundColor: "inherit" };
+                return { backgroundColor: "white" };
             }
         }
     };
@@ -50,27 +54,29 @@ export const DesignBlock = ({ designBlock, index }) => {
         <Draggable draggableId={designBlock.id} index={index}>
             {(provided, snapshot) => {
                 return (
-                    <Card className="mb-2" style={getBlockStyles()}>
-                        <div className="row" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                            <div className="col d-flex">
-                                <div className="design-block-title border-end" style={{ width: "60px" }}>
-                                    {designBlock.type}
+                    <div className="design-block-wrapper mb-2" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <Card style={getBlockStyles()}>
+                            <div className="row">
+                                <div className="col d-flex">
+                                    <div className="design-block-title border-end" style={{ width: "60px" }}>
+                                        {designBlock.type}
+                                    </div>
+                                    <div className="design-block-content ps-3">{displayContent()}</div>
                                 </div>
-                                <div className="design-block-content ps-3">{displayContent()}</div>
+                                <div className="col-auto row">
+                                    <span className="col">
+                                        <EditOutlined />
+                                    </span>
+                                    <span className="col">
+                                        <SettingOutlined />
+                                    </span>
+                                    <span className="col">
+                                        <CloseOutlined />
+                                    </span>
+                                </div>
                             </div>
-                            <div className="col-auto row">
-                                <span className="col">
-                                    <EditOutlined />
-                                </span>
-                                <span className="col">
-                                    <SettingOutlined />
-                                </span>
-                                <span className="col">
-                                    <CloseOutlined />
-                                </span>
-                            </div>
-                        </div>
-                    </Card>
+                        </Card>
+                    </div>
                 );
             }}
         </Draggable>

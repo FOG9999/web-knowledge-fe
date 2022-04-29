@@ -25,6 +25,7 @@ export const DesignBLockList = ({ listDesignBlocks }) => {
                         {
                             renderDeisgnBlockList()
                         }
+                        {provided.placeholder}
                     </div>)
                 }
             }
