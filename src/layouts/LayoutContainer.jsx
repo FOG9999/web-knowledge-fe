@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import SubMenu from "antd/lib/menu/SubMenu";
 import "../styles/LayoutContainer.scss";
 import { LaptopOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -18,6 +19,8 @@ export const LayoutContainer = (props) => {
     const [blocks, setBlocks] = useState([]);
     const [collapsed, setCollapsed] = useState(true);
     const [selectedLesson, setSelectedLesson] = useState("");
+
+    const windowSize = useSelector(state => state.window);
 
     useEffect(() => {
         if (selectedCourse) {
@@ -41,6 +44,7 @@ export const LayoutContainer = (props) => {
             // setLessons(fake.lessons);
             setSelectedCourse("61b56b40-2dd9-416f-bc96-952ced0731f5");
         }, 1000);
+        console.log('windowSize', windowSize);
     }, []);
 
     useEffect(() => {

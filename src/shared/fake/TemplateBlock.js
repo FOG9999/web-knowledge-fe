@@ -6,43 +6,43 @@ export const templateBlockList = [
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Header 1',
         code: 'h1'
     },
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Header 2',
         code: 'h2'
     },
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Paragragh',
         code: 'p'
     },
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Code',
         code: 'code'
     },
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Warning',
         code: 'warn'
     },
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Success',
         code: 'success'
     },
     {
         id: f.datatype.uuid(),
         img: f.image.imageUrl(),
-        title: f.lorem.word(),
+        title: 'Error',
         code: 'error'
     },
 ];
