@@ -1,6 +1,5 @@
 import { CloseOutlined, EditOutlined, SettingOutlined } from "@ant-design/icons";
 import { Card, Typography } from "antd";
-import { useEffect, useState } from "react";
 import Prism from "prismjs";
 import { Draggable } from "react-beautiful-dnd";
 import "../../../styles/DesignBlock.scss";
@@ -9,9 +8,9 @@ import { WINDOW_SMALL_WIDTH } from "../../../constants";
 
 const { Title } = Typography;
 
-export const DesignBlock = ({ designBlock, index }) => {
+export const DesignBlock = ({ designBlock, index, openModal }) => {
 
-    const windowWidth = useSelector(state => state.window.winWidth);
+    const windowWidth = useSelector((state) => state.window.winWidth);
 
     const getBlockStyles = () => {
         switch (designBlock.type) {
@@ -54,14 +53,11 @@ export const DesignBlock = ({ designBlock, index }) => {
                     <div className="col">
                         <div className="design-block-content ps-3">{displayContent()}</div>
                     </div>
-                    <div className="col-auto row">
-                        <span className="col">
+                    <div className="col-auto row cursor-pointer">
+                        <span className="col" onClick={() => openModal(designBlock)}>
                             <EditOutlined />
                         </span>
-                        <span className="col">
-                            <SettingOutlined />
-                        </span>
-                        <span className="col">
+                        <span className="col cursor-pointer">
                             <CloseOutlined />
                         </span>
                     </div>
@@ -72,18 +68,30 @@ export const DesignBlock = ({ designBlock, index }) => {
 
     const renderOnSmallScreen = () => {
         return (
-            <Card title={designBlock.type} style={getBlockStyles()} />
-        )
+            <Card style={getBlockStyles()}>
+                <div className="row">
+                    <div className="col-9 align-items-center d-flex justify-content-center">{designBlock.type}</div>
+                    <div className="col-3">
+                        <div className="mt-1 cursor-pointer">
+                            <CloseOutlined />
+                        </div>
+                        <div className="cursor-pointer" onClick={() => openModal(designBlock)}>
+                            <EditOutlined />
+                        </div>
+                    </div>
+                </div>
+            </Card>
+        );
     };
 
     return (
         <Draggable draggableId={designBlock.id} index={index}>
             {(provided, snapshot) => {
-                return <div className="design-block-wrapper mb-2" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                    {
-                        windowWidth < WINDOW_SMALL_WIDTH ? renderOnSmallScreen() : renderOnLargeScreen()
-                    }
-                </div>;
+                return (
+                    <div className="design-block-wrapper mb-2" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        {windowWidth < WINDOW_SMALL_WIDTH ? renderOnSmallScreen() : renderOnLargeScreen()}
+                    </div>
+                );
             }}
         </Draggable>
     );

@@ -98,7 +98,7 @@ export const LessonDesign = ({ listDesignBlocks, setListDesignBlocks }) => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="row">
                     <div className="col">
-                        <DesignBLockList listDesignBlocks={listDesignBlocks} pushBlock={pushBlock} />
+                        <DesignBLockList listDesignBlocks={listDesignBlocks} setListDesignBlocks={setListDesignBlocks} pushBlock={pushBlock} />
                     </div>
                     {windowWidth < WINDOW_SMALL_WIDTH ? null : (
                         <div className="col-auto">
