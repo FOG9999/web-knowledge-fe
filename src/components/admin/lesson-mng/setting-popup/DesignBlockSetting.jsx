@@ -12,19 +12,24 @@ export const DesignBlockSetting = ({ block, visible, handleSave, handleCancel })
         setStateBlock(block);
     }, [block]);
 
-    const onChange = (evt) => {
-        let string = evt.target.value;
+    const onKeyDown = (evt) => {        
         if(evt.code === 'Tab'){
+            let string = evt.target.value;
             let {selectionStart, selectionEnd} = evt.target;
-            string = string.substring(0, selectionStart)+'\t'+string.substring(selectionStart+1, string.length)
-        }
-        console.log(string);
-        setStateBlock({...stateBlock, content: string});
+            string = string.substring(0, selectionStart)+'\t'+string.substring(selectionStart+1, string.length);
+            evt.target.selectionStart = evt.target.selectionEnd = selectionStart + 1;
+            evt.preventDefault()
+            setStateBlock({...stateBlock, content: string});
+        }        
     };
+
+    const onChange = (evt) => {
+        setStateBlock({...block, content: evt.target.value})
+    }
 
     return (
         <Modal visible={visible} title="Chỉnh sửa block" onOk={() => handleSave(stateBlock)} onCancel={handleCancel}>
-            <Input.TextArea value={stateBlock.content} onKeyDown={(e) => onChange(e)} rows={10}/>
+            <Input.TextArea value={stateBlock.content} onChange={(e) => onChange(e)} onKeyDown={(e) => onKeyDown(e)} rows={10}/>
         </Modal>
     );
 };
