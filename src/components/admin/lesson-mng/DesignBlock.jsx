@@ -41,7 +41,7 @@ export const DesignBlock = ({ designBlock, index, openModal }) => {
                 return <Title level={4}>{designBlock.content}</Title>;
             }
             default: {
-                return <p>{designBlock.content}</p>;
+                return <p style={{whiteSpace: 'pre-wrap'}}>{designBlock.content}</p>;
             }
         }
     };
