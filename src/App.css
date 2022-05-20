@@ -48,3 +48,8 @@
   width: 5px;
   display: none;
 }
+
+.wk-btn {
+  align-items: center;
+  display: flex;
+}
