@@ -1,20 +1,16 @@
 import { CloseOutlined, EditOutlined, SettingOutlined } from "@ant-design/icons";
 import { Card, Typography } from "antd";
-import { useEffect, useState } from "react";
 import Prism from "prismjs";
 import { Draggable } from "react-beautiful-dnd";
 import "../../../styles/DesignBlock.scss";
+import { useSelector } from "react-redux";
+import { WINDOW_SMALL_WIDTH } from "../../../constants";
 
 const { Title } = Typography;
 
-export const DesignBlock = ({ designBlock, index }) => {
-    useEffect(() => {
-        console.log("index change");
-    }, [index]);
+export const DesignBlock = ({ designBlock, index, openModal }) => {
 
-    useEffect(() => {
-        console.log("block change");
-    }, [designBlock]);
+    const windowWidth = useSelector((state) => state.window.winWidth);
 
     const getBlockStyles = () => {
         switch (designBlock.type) {
@@ -45,9 +41,47 @@ export const DesignBlock = ({ designBlock, index }) => {
                 return <Title level={4}>{designBlock.content}</Title>;
             }
             default: {
-                return <p>{designBlock.content}</p>;
+                return <p style={{whiteSpace: 'pre-wrap'}}>{designBlock.content}</p>;
             }
         }
+    };
+
+    const renderOnLargeScreen = () => {
+        return (
+            <Card style={getBlockStyles()}>
+                <div className="row">
+                    <div className="col">
+                        <div className="design-block-content ps-3">{displayContent()}</div>
+                    </div>
+                    <div className="col-auto row cursor-pointer">
+                        <span className="col" onClick={() => openModal(designBlock)}>
+                            <EditOutlined />
+                        </span>
+                        <span className="col cursor-pointer">
+                            <CloseOutlined />
+                        </span>
+                    </div>
+                </div>
+            </Card>
+        );
+    };
+
+    const renderOnSmallScreen = () => {
+        return (
+            <Card style={getBlockStyles()}>
+                <div className="row">
+                    <div className="col-9 align-items-center d-flex justify-content-center">{designBlock.type}</div>
+                    <div className="col-3">
+                        <div className="mt-1 cursor-pointer">
+                            <CloseOutlined />
+                        </div>
+                        <div className="cursor-pointer" onClick={() => openModal(designBlock)}>
+                            <EditOutlined />
+                        </div>
+                    </div>
+                </div>
+            </Card>
+        );
     };
 
     return (
@@ -55,27 +89,7 @@ export const DesignBlock = ({ designBlock, index }) => {
             {(provided, snapshot) => {
                 return (
                     <div className="design-block-wrapper mb-2" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                        <Card style={getBlockStyles()}>
-                            <div className="row">
-                                <div className="col d-flex">
-                                    <div className="design-block-title border-end" style={{ width: "60px" }}>
-                                        {designBlock.type}
-                                    </div>
-                                    <div className="design-block-content ps-3">{displayContent()}</div>
-                                </div>
-                                <div className="col-auto row">
-                                    <span className="col">
-                                        <EditOutlined />
-                                    </span>
-                                    <span className="col">
-                                        <SettingOutlined />
-                                    </span>
-                                    <span className="col">
-                                        <CloseOutlined />
-                                    </span>
-                                </div>
-                            </div>
-                        </Card>
+                        {windowWidth < WINDOW_SMALL_WIDTH ? renderOnSmallScreen() : renderOnLargeScreen()}
                     </div>
                 );
             }}

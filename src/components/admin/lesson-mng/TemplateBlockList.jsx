@@ -17,7 +17,7 @@ export const TemplateBlockList = ({ templateBLockList }) => {
         <Droppable droppableId="template-list" isDropDisabled={true} key={2}>
             {
                 (provided, snapshot) => {
-                    return (<div className="mb-2" style={{maxHeight: '70vh', overflowY: 'auto', minHeight: '400px'}}
+                    return (<div className="mb-2" style={{maxHeight: '70vh', overflowY: 'auto', minHeight: '400px', overflowX: 'hidden'}}
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                     >
