@@ -7,8 +7,8 @@ import SubMenu from "antd/lib/menu/SubMenu";
 import "../styles/LayoutContainer.scss";
 import { LaptopOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { WINDOW_TYPES } from "../redux/actions/ActionTypes";
+import { store } from "../redux/Store";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -23,8 +23,6 @@ export const LayoutContainer = (props) => {
     const [selectedLesson, setSelectedLesson] = useState("");
 
     let windowSize = useSelector(state => state.window);
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (selectedCourse) {
@@ -43,7 +41,7 @@ export const LayoutContainer = (props) => {
 
     useEffect(() => {
         window.onresize = () => {
-            dispatch({ type: WINDOW_TYPES.RESIZE })
+            store.dispatch({ type: WINDOW_TYPES.RESIZE })
         }
         setTimeout(() => {
             setCategories(fake.categories);

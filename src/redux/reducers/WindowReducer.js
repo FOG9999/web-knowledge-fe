@@ -14,7 +14,7 @@ export const windowReducer = (state = initialState, action) => {
             }
         }
         default: {
-            return initialState;
+            return state;
         }
     }
 }

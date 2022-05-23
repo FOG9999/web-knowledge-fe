@@ -11,8 +11,13 @@ export const loadingReducer = (state = initialState, action) => {
                 loading: true
             }
         }
+        case LOADING_TYPES.LOADED: {
+            return {
+                loading: false
+            }
+        }
         default: {
-            return initialState;
+            return state;
         }
     }
 }

@@ -12,7 +12,7 @@ const WKPagination = ({ current, pageSize, total, onChange, currentNumberOfItems
                 Showing {currentNumberOfItems} of {total} {itemUnit}
             </div>
             <div className={winWidth > 600 ? "": "d-flex justify-content-center"}>
-                <Pagination current={current} showLessItems={winWidth < 600} pageSize={pageSize} total={total} onChange={onChange} />
+                <Pagination current={current} pageSize={pageSize} total={total} onChange={onChange} />
             </div>
         </div>
     );

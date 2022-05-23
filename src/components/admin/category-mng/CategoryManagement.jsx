@@ -84,7 +84,7 @@ export const CategoryManagement = () => {
                         <b>Category Management</b>
                     </span>
                     <span className="p-1">
-                        <WKButton icon={<PlusOutlined />}>{windowSize > 600 ? 'Add new category': ''}</WKButton>
+                        <WKButton icon={<PlusOutlined />}>{windowSize > 600 ? 'Add new category': null}</WKButton>
                     </span>
                 </div>
             }
