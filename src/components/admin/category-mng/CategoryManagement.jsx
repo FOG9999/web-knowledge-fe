@@ -88,6 +88,7 @@ export const CategoryManagement = () => {
                     </span>
                 </div>
             }
+            style={{minWidth: '300px'}}
         >
             <div className="table-container ">
                 <WKTable dataSource={categories.map((item) => ({ ...item, key: item.id }))} columns={columns} page={page} pageSize={pageSize} />

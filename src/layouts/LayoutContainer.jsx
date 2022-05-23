@@ -179,6 +179,7 @@ export const LayoutContainer = (props) => {
                             padding: 24,
                             margin: 0,
                             minHeight: 280,
+                            overflowX: 'auto'
                         }}
                     >
                         {React.cloneElement(props.children, { blocks })}
