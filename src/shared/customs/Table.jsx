@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import { Table } from "antd";
+import { Space, Table } from "antd";
 import { useSelector } from "react-redux";
+import { WKButton } from "./Button";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const WKTable = ({ dataSource, columns, expand, pagination, page, pageSize }) => {
     const defaultConfig = {
@@ -34,12 +36,25 @@ const WKTable = ({ dataSource, columns, expand, pagination, page, pageSize }) =>
                                             {itemIndex + 1 + (page - 1) * pageSize}
                                         </td>
                                     );
-                                }
-                                else return (
-                                    <td data-label={col.title} key={col.dataIndex}>
-                                        {item[col.dataIndex]}
-                                    </td>
-                                );
+                                } else if (col.dataIndex === "actions") {
+                                    return (
+                                        <td data-label={col.title} key={col.dataIndex}>
+                                            <Space>
+                                                <WKButton icon={<EditOutlined />} type="primary">
+                                                    {windowWidth < 600 ? null : "Edit"}
+                                                </WKButton>
+                                                <WKButton icon={<DeleteOutlined />} danger>
+                                                    {windowWidth < 600 ? null : "Delete"}
+                                                </WKButton>
+                                            </Space>
+                                        </td>
+                                    );
+                                } else
+                                    return (
+                                        <td data-label={col.title} key={col.dataIndex}>
+                                            {item[col.dataIndex]}
+                                        </td>
+                                    );
                             })}
                         </tr>
                     ))}

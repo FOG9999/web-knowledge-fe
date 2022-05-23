@@ -2,7 +2,7 @@ import { DeleteOutlined, EditOutlined, FileExcelOutlined, PlusOutlined } from "@
 import { Card, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CategoryService } from "../../../apis/CourseService";
+import { CategoryService } from "../../../apis/CategoryService";
 import { loaded, loading } from "../../../redux/actions/LoadingAction";
 import { store } from "../../../redux/Store";
 import { WKButton } from "../../../shared/customs/Button";
