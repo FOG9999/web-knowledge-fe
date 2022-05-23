@@ -1,5 +1,6 @@
 @import '~antd/dist/antd.css';
 @import '~prismjs/themes/prism.css';
+@import './styles/custom.scss';
 
 .App {
   text-align: center;
@@ -47,11 +48,6 @@
 ::-webkit-scrollbar {
   width: 5px;
   display: none;
-}
-
-.wk-btn {
-  align-items: center;
-  display: flex;
 }
 
 @media screen and (max-width: 1000px) {

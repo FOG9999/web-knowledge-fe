@@ -1,6 +1,7 @@
 import { DeleteOutlined, EditOutlined, FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
 import { Card, Space } from "antd";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { CategoryService } from "../../../apis/CourseService";
 import { loaded, loading } from "../../../redux/actions/LoadingAction";
 import { store } from "../../../redux/Store";
@@ -13,6 +14,8 @@ export const CategoryManagement = () => {
     const [totalCategories, setTotalCategories] = useState(0);
     const [page, setPage] = useState(1);
     const [pageSize] = useState(2);
+
+    let windowSize = useSelector(state => state.window.winWidth);
 
     const columns = [
         {
@@ -77,11 +80,11 @@ export const CategoryManagement = () => {
         <Card
             title={
                 <div className="d-flex">
-                    <span className="flex-grow-1">
+                    <span className="flex-grow-1 d-flex align-items-center">
                         <b>Category Management</b>
                     </span>
                     <span className="p-1">
-                        <WKButton icon={<PlusOutlined />}>Add new category</WKButton>
+                        <WKButton icon={<PlusOutlined />}>{windowSize > 600 ? 'Add new category': ''}</WKButton>
                     </span>
                 </div>
             }

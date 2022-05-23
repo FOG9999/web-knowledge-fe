@@ -1,0 +1,10 @@
+.wk-btn {
+    align-items: center;
+    display: flex;
+}
+
+@media screen and (max-width: 600px){
+    .wk-btn {
+        display: block;
+    }
+}
