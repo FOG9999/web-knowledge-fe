@@ -10,7 +10,7 @@ const { Title } = Typography;
 
 export const DesignBlock = ({ designBlock, index, openModal }) => {
 
-    const windowWidth = useSelector((state) => state.window.winWidth);
+    let windowWidth = useSelector((state) => state.window.winWidth);
 
     const getBlockStyles = () => {
         switch (designBlock.type) {

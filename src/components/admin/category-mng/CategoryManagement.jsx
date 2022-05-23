@@ -12,7 +12,7 @@ export const CategoryManagement = () => {
     const [categories, setCategories] = useState([]);
     const [totalCategories, setTotalCategories] = useState(0);
     const [page, setPage] = useState(1);
-    const [pageSize] = useState(10);
+    const [pageSize] = useState(2);
 
     const columns = [
         {
@@ -21,7 +21,7 @@ export const CategoryManagement = () => {
             render: (text, record, index) => {
                 return index + 1 + (page - 1) * pageSize;
             },
-            width: 50,
+            // width: 50,
         },
         {
             title: "Title",
@@ -55,15 +55,17 @@ export const CategoryManagement = () => {
     ];
 
     const getListCategories = (page) => {
-        CategoryService.getAllCategories(page, pageSize).then((cates) => {
-            setCategories(cates);
+        CategoryService.getAllCategories(page, pageSize).then((res) => {
+            setCategories(res.categories);
+            setTotalCategories(res.total);
+            setPage(page);
             store.dispatch(loaded());
         });
     };
 
-    const onChangePage = (page) => {
-        setPage(page);
-        getListCategories(page);
+    const onChangePage = (page) => {        
+        store.dispatch(loading());
+        getListCategories(page);        
     };
 
     useEffect(() => {
@@ -85,7 +87,7 @@ export const CategoryManagement = () => {
             }
         >
             <div className="table-container ">
-                <WKTable dataSource={categories.map((item) => ({ ...item, key: item.id }))} columns={columns} />
+                <WKTable dataSource={categories.map((item) => ({ ...item, key: item.id }))} columns={columns} page={page} pageSize={pageSize} />
             </div>
             <div className="mt-3">
                 <WKPagination total={totalCategories} pageSize={pageSize} current={page} itemUnit="categories" currentNumberOfItems={categories.length} onChange={onChangePage} />

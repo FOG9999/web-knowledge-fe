@@ -17,7 +17,7 @@ export const LessonDesign = ({ listDesignBlocks, setListDesignBlocks }) => {
     const [templateBLockList, setTemplateBlockList] = useState([]);
     const [currentLesson, setCurrentLesson] = useState({});
 
-    const windowWidth = useSelector((state) => state.window.winWidth);
+    let windowWidth = useSelector((state) => state.window.winWidth);
 
     const { lId } = useParams();
 

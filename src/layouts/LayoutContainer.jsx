@@ -22,7 +22,7 @@ export const LayoutContainer = (props) => {
     const [collapsed, setCollapsed] = useState(true);
     const [selectedLesson, setSelectedLesson] = useState("");
 
-    const windowSize = useSelector(state => state.window);
+    let windowSize = useSelector(state => state.window);
 
     const dispatch = useDispatch();
 

@@ -15,7 +15,7 @@ const CategoryService = {
             let categories = [];
             setTimeout(() => {
                 categories = fake.categories.slice((page-1)*size, page*size)
-                resolve(categories)
+                resolve({categories, total: fake.categories.length})
             }, 2000)
         })
     }

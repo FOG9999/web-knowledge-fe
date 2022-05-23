@@ -6,7 +6,7 @@ import { CategoryManagement } from "../admin/category-mng/CategoryManagement";
 
 export const CategoryMngWrapper = () => {
 
-    const loading = useSelector(state => state.loading.loading)
+    let loading = useSelector(state => state.loading.loading)
     const [breadcrumbItems] = useState([
         {url: 'https://reactjs.org/docs/typechecking-with-proptypes.html', title: 'Admin Home'},
         {url: 'https://ant.design/components/breadcrumb/#header', title: 'Category Management'},

@@ -16,7 +16,7 @@ export const DesignBLockList = ({ listDesignBlocks, pushBlock, setListDesignBloc
     
     const currentLesson = useContext(LessonContext);
 
-    const windowWidth = useSelector((state) => state.window.winWidth);
+    let windowWidth = useSelector((state) => state.window.winWidth);
 
     const menu = (
         <Menu>
